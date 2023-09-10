@@ -1,8 +1,7 @@
 package ru.bozhov.dormitory.model;
 
 import jakarta.persistence.*;
-import lombok.Data;
-import org.junit.jupiter.api.Test;
+import ru.bozhov.dormitory.botAPI.state.DepositState;
 
 import java.sql.Date;
 
@@ -19,4 +18,7 @@ public class Deposit {
     private User user;
     @Column(name = "date_ deposit")
     private Date depositDate;
+    @Column(name = "deposit_state")
+    @Enumerated(value = EnumType.STRING)
+    private DepositState depositState;
 }
