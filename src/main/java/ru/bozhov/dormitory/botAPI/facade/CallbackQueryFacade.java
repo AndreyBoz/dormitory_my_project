@@ -8,8 +8,6 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 @Service
 @Slf4j
 public class CallbackQueryFacade {
-
-
     public SendMessage handleMessage(Update update) {
         SendMessage message = null;
 

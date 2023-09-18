@@ -13,12 +13,11 @@ import java.util.List;
 @Data
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long chatId;
     @Column(name="user_name")
     private String userName;
     @Column(name = "number_room")
-    private int numberRoom;
+    private Integer numberRoom;
     @Column(name = "billing_period_start")
     private Date billingPeriodStart;
     @Column(name = "billing_period_end")
@@ -29,7 +28,6 @@ public class User {
     @Column(name = "deposit_data")
     @OneToMany(mappedBy = "user")
     private List<Deposit> depositData = new ArrayList<>();
-
     @Column(name = "bot_state")
     @Enumerated(value = EnumType.STRING)
     private BotState botState;

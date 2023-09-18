@@ -7,45 +7,48 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import ru.bozhov.dormitory.botAPI.state.BotState;
+import ru.bozhov.dormitory.repository.UserRepository;
 import ru.bozhov.dormitory.service.UserService;
 
 @Service
 @Slf4j
 public class ReplyMessageFacade {
-    UserService userService;
-    BotStateContext botStateContext;
 
+    @Autowired
+    private UserService userService;
 
+    @Autowired
+    private BotStateContext botStateContext;
+    @Autowired
+    private UserRepository userRepository;
     public SendMessage handleMessage(Update update) {
         Message message = update.getMessage();
         String inputMsg = message.getText();
-        int userId = Math.toIntExact(message.getFrom().getId());
-        BotState botState;
-        SendMessage replyMessage = null;
+        BotState botState = getBotStateFromInputMessage(message);
 
-        switch (inputMsg){
-            case "Показать историю пополнений":
-                botState = BotState.VIEW_HISTORY_DEPOSIT;
-                break;
-            case "Помощь":
-                botState = BotState.HELP;
-                break;
+        userService.setBotState(message, botState);
+
+        return botStateContext.getReplyMessage(botState, message);
+    }
+
+    private BotState getBotStateFromInputMessage(Message message) {
+        switch (message.getText()) {
+            case "Зарегистрировать комнату":
+                return BotState.REGISTRATION;
+            /*case "Показать историю пополнений":
+                return BotState.VIEW_HISTORY_DEPOSIT;
             case "Посмотреть даты расчётного периода":
-                botState = BotState.SHOW_TRANSFER_DATE;
-                break;
-            case "Пополнить":
-                botState = BotState.DEPOSIT;
-                break;
-            case "Посмотреть сосотояние оплаты":
-                botState = BotState.SHOW_DEPOSIT_STATE;
-                break;
-            default: botState = BotState.DEFAULT_STATE;
+                return BotState.SHOW_TRANSFER_DATE;*/
+            case "Оплатить":
+                return BotState.DEPOSIT;
+            case "Установить расчётный период":
+                return BotState.SET_BILLING_PERIOD;
+            /*case "Посмотреть состояние оплаты":
+                return BotState.SHOW_DEPOSIT_STATE;*/
+            case "Помощь":
+                return BotState.HELP;
+            default:
+                return userRepository.findBotStateByChatId(message.getChatId());
         }
-
-        userService.setBotState(Long.valueOf(userId), botState);
-
-        replyMessage = botStateContext.getReplyMessage(botState, message);
-
-        return replyMessage;
     }
 }

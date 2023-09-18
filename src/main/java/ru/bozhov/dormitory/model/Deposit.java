@@ -13,8 +13,8 @@ public class Deposit {
     private Long depositId;
     @Column(name= "deposit_amount")
     private int amount;
-    @Column(name = "usr")
     @ManyToOne
+    @JoinColumn(name = "user_id")
     private User user;
     @Column(name = "date_ deposit")
     private Date depositDate;

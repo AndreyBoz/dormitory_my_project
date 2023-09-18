@@ -10,14 +10,11 @@ import ru.bozhov.dormitory.botAPI.facade.TelegramFacade;
 @Configuration
 public class AppConfig {
     private final DormitoryBotConfig dormitoryBotConfig;
-
     public AppConfig(DormitoryBotConfig dormitoryBotConfig){
         this.dormitoryBotConfig = dormitoryBotConfig;
     }
-
     @Bean
     DormitoryBot dormitoryBot(TelegramFacade telegramFacade){
-
         DormitoryBot dormitoryBot = new DormitoryBot(telegramFacade);
         dormitoryBot.setBotPath(dormitoryBotConfig.getWebhookPath());
         dormitoryBot.setBotName(dormitoryBotConfig.getBotName());
