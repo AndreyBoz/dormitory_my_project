@@ -36,9 +36,7 @@ public class ReplyMessageFacade {
             case "Зарегистрировать комнату":
                 return BotState.REGISTRATION;
             /*case "Показать историю пополнений":
-                return BotState.VIEW_HISTORY_DEPOSIT;
-            case "Посмотреть даты расчётного периода":
-                return BotState.SHOW_TRANSFER_DATE;*/
+                return BotState.VIEW_HISTORY_DEPOSIT;*/
             case "Оплатить":
                 return BotState.DEPOSIT;
             case "Установить расчётный период":
@@ -47,6 +45,8 @@ public class ReplyMessageFacade {
                 return BotState.SHOW_DEPOSIT_STATE;*/
             case "Помощь":
                 return BotState.HELP;
+            case "Информация":
+                return BotState.USER_INFO;
             default:
                 return userRepository.findBotStateByChatId(message.getChatId());
         }

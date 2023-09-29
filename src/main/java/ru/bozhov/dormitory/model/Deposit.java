@@ -17,7 +17,7 @@ public class Deposit {
     @JoinColumn(name = "user_id")
     private User user;
     @Column(name = "date_ deposit")
-    private Date depositDate;
+    private java.sql.Date depositDate;
     @Column(name = "deposit_state")
     @Enumerated(value = EnumType.STRING)
     private DepositState depositState;

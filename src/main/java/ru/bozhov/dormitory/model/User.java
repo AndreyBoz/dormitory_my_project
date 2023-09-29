@@ -19,9 +19,9 @@ public class User {
     @Column(name = "number_room")
     private Integer numberRoom;
     @Column(name = "billing_period_start")
-    private Date billingPeriodStart;
+    private java.sql.Date billingPeriodStart;
     @Column(name = "billing_period_end")
-    private Date billingPeriodEnd;
+    private java.sql.Date billingPeriodEnd;
     @Column(name = "user_type")
     @Enumerated(value = EnumType.STRING)
     private ClientType type;

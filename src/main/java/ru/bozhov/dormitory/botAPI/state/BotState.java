@@ -9,5 +9,6 @@ public enum BotState {
     REGISTRATION,
     SET_BILLING_PERIOD,
     SET_BILLING_PERIOD_START,
-    ROOM_INIT
+    ROOM_INIT,
+    USER_INFO
 }

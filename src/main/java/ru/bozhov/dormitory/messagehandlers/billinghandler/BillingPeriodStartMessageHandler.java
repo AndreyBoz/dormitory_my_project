@@ -8,11 +8,12 @@ import ru.bozhov.dormitory.botAPI.state.BotState;
 import ru.bozhov.dormitory.messagehandlers.InputMessageHandler;
 import ru.bozhov.dormitory.service.UserService;
 
+import java.sql.Date;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.util.Date;
+
 @Component
 public class BillingPeriodStartMessageHandler implements InputMessageHandler {
     @Autowired
@@ -32,11 +33,12 @@ public class BillingPeriodStartMessageHandler implements InputMessageHandler {
         if(date==null){
             sendMessage.setText("Укажите дату в нужном формате (день-месяц-год).");
         }else {
-            userService.setBillingPeriodStart(message, java.sql.Date.valueOf(String.valueOf(date)));
+            java.sql.Date sqlDate = new java.sql.Date(date.getTime());
+            userService.setBillingPeriodStart(message, sqlDate);
+
             LocalDate newLocalDate = ((java.sql.Date) date).toLocalDate().plusMonths(1);
             userService.setBillingPeriodEnd(message, java.sql.Date.valueOf(newLocalDate));
 
-            userService.setBotState(message,BotState.HELP);
             sendMessage.setText("Расчётный период установлен.");
         }
 
@@ -45,10 +47,11 @@ public class BillingPeriodStartMessageHandler implements InputMessageHandler {
     private static Date tryParceDate(String dateString) {
         DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
         try {
-            Date date = dateFormat.parse(dateString);
-            return date;
+            java.util.Date date = dateFormat.parse(dateString); // Парсим строку в java.util.Date
+            return new java.sql.Date(date.getTime()); // Преобразуем в java.sql.Date и возвращаем
         } catch (ParseException e) {
             return null;
         }
     }
+
 }
