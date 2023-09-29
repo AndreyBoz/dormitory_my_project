@@ -9,6 +9,9 @@ import ru.bozhov.dormitory.model.ClientType;
 import ru.bozhov.dormitory.model.User;
 import ru.bozhov.dormitory.repository.UserRepository;
 
+import java.sql.Date;
+import java.time.LocalDate;
+
 @Service
 @Slf4j
 public class UserServiceImpl implements UserService{
@@ -66,5 +69,22 @@ public class UserServiceImpl implements UserService{
         }
 
         return botState;
+    }
+
+    @Override
+    public void setBillingPeriodStart(Message message, Date date) {
+        User user = userRepository.findById(message.getChatId()).orElse(null);
+
+        if(user!=null){
+            user.setBillingPeriodStart(date);
+        }
+    }
+    @Override
+    public void setBillingPeriodEnd(Message message, Date date) {
+        User user = userRepository.findById(message.getChatId()).orElse(null);
+
+        if(user!=null){
+            user.setBillingPeriodEnd(date);
+        }
     }
 }

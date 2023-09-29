@@ -13,12 +13,12 @@ import ru.bozhov.dormitory.service.UserService;
 @Service
 @Slf4j
 public class ReplyMessageFacade {
-
     @Autowired
     private UserService userService;
 
     @Autowired
     private BotStateContext botStateContext;
+
     @Autowired
     private UserRepository userRepository;
     public SendMessage handleMessage(Update update) {

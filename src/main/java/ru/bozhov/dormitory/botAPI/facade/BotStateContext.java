@@ -6,12 +6,7 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import ru.bozhov.dormitory.botAPI.state.BotState;
 
-import java.time.LocalDate;
 
-import org.springframework.stereotype.Component;
-import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
-import org.telegram.telegrambots.meta.api.objects.Message;
-import ru.bozhov.dormitory.botAPI.state.BotState;
 import ru.bozhov.dormitory.messagehandlers.InputMessageHandler;
 
 import java.util.HashMap;
