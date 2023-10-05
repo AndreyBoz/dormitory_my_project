@@ -4,8 +4,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.objects.Message;
+import org.telegram.telegrambots.meta.api.objects.PhotoSize;
 import ru.bozhov.dormitory.botAPI.state.BotState;
 import ru.bozhov.dormitory.model.ClientType;
+import ru.bozhov.dormitory.model.Deposit;
 import ru.bozhov.dormitory.model.User;
 import ru.bozhov.dormitory.repository.UserRepository;
 
@@ -101,4 +103,17 @@ public class UserServiceImpl implements UserService{
         }
         return null;
     }
+
+    @Override
+    public boolean isBillingPeriodInitialized(Message message) {
+        User user = userRepository.findById(message.getChatId()).orElse(null);
+
+        if(user!=null && user.getBillingPeriodStart()!=null) {
+            return true;
+        }
+
+        return false;
+    }
+
+
 }

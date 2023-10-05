@@ -1,5 +1,6 @@
 package ru.bozhov.dormitory.messagehandlers.billinghandler;
 
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
@@ -25,6 +26,7 @@ public class BillingPeriodStartMessageHandler implements InputMessageHandler {
     }
 
     @Override
+    @Transactional
     public SendMessage handle(Message message) {
         SendMessage sendMessage = new SendMessage();
         sendMessage.setChatId(message.getChatId());
