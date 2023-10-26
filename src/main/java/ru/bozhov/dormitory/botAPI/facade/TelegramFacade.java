@@ -11,6 +11,7 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 public class TelegramFacade {
     private CallbackQueryFacade callbackQueryFacade;
     private ReplyMessageFacade replyMessageFacade;
+
     public TelegramFacade(CallbackQueryFacade callbackQueryFacade, ReplyMessageFacade replyMessageFacade){
         this.callbackQueryFacade = callbackQueryFacade;
         this.replyMessageFacade = replyMessageFacade;
@@ -19,7 +20,7 @@ public class TelegramFacade {
         SendMessage replyMessage = null;
 
         if(update.hasCallbackQuery()){
-            log.info("New callbackquery; Chat ID  - {}; Username - {}, Data - {};", update.getCallbackQuery().getMessage().getChatId(), update.getCallbackQuery().getMessage().getChat().getUserName(), update.getCallbackQuery().getData());
+            log.info("New callbackquery; Chat ID  - {}; Username - {}; Data - {};", update.getCallbackQuery().getMessage().getChatId(), update.getCallbackQuery().getMessage().getChat().getUserName(), update.getCallbackQuery().getData());
             return callbackQueryFacade.handleMessage(update);
         }
 
