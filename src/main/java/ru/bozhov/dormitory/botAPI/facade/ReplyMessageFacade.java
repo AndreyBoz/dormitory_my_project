@@ -35,14 +35,10 @@ public class ReplyMessageFacade {
         switch (message.getText()) {
             case "Зарегистрировать комнату":
                 return BotState.REGISTRATION;
-            /*case "Показать историю пополнений":
-                return BotState.VIEW_HISTORY_DEPOSIT;*/
             case "Оплатить":
                 return BotState.DEPOSIT;
-            case "Установить расчётный период":
+            case "Установить расчетный период":
                 return BotState.SET_BILLING_PERIOD;
-            /*case "Посмотреть состояние оплаты":
-                return BotState.SHOW_DEPOSIT_STATE;*/
             case "Помощь":
                 return BotState.HELP;
             case "Информация":

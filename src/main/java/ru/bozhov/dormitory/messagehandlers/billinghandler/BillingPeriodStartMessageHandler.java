@@ -49,8 +49,8 @@ public class BillingPeriodStartMessageHandler implements InputMessageHandler {
     private static Date tryParceDate(String dateString) {
         DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
         try {
-            java.util.Date date = dateFormat.parse(dateString); // Парсим строку в java.util.Date
-            return new java.sql.Date(date.getTime()); // Преобразуем в java.sql.Date и возвращаем
+            java.util.Date date = dateFormat.parse(dateString);
+            return new java.sql.Date(date.getTime());
         } catch (ParseException e) {
             return null;
         }

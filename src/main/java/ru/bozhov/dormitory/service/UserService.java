@@ -15,6 +15,7 @@ public interface UserService {
     void setBillingPeriodStart(Message message, Date date);
     void setBillingPeriodEnd(Message message, Date date);
     User getUser(Message message);
-
+    User getUserByChatId(Long chatId);
+    void setBotStateByChatId(Long chatId, BotState botState);
     boolean isBillingPeriodInitialized(Message message);
 }

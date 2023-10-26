@@ -28,9 +28,9 @@ public class DepositServiceImpl implements DepositService {
     @Autowired
     private DepositRepository depositRepository;
 
-
+    @Transactional
     @Override
-    public void saveDeposit(Message message) {
+    public Long saveDeposit(Message message) {
         Long chatId = message.getChatId();
         User user = userRepository.findById(chatId).orElse(null);
 
@@ -43,8 +43,23 @@ public class DepositServiceImpl implements DepositService {
             deposit.setDepositDate(depositDate);
             deposit.setDepositState(DepositState.WAITING);
             deposit.setFilePath(message.getPhoto().get(0).getFileId());
+            user.getDepositData().add(deposit);
 
+            try {
+                depositRepository.save(deposit);
+            } catch (Exception e) {
+                log.error("Ошибка при сохранении Deposit: " + e.getMessage(), e);
+            }
+            return deposit.getDepositId();
+        }
+        return null;
+    }
 
+    @Override
+    public void setDepositState(Long depositId, DepositState depositState) {
+        Deposit deposit = depositRepository.findById(depositId).orElse(null);
+        if(deposit!=null){
+            deposit.setDepositState(depositState);
             depositRepository.save(deposit);
         }
     }

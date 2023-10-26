@@ -1,13 +1,10 @@
 package ru.bozhov.dormitory.botAPI.state;
 
 public enum BotState {
-    /*VIEW_HISTORY_DEPOSIT,*/
     DEPOSIT,
     DEPOSIT_ROOM,
     DEPOSIT_PHOTO,
     HELP,
-    /*SHOW_TRANSFER_DATE,
-    SHOW_DEPOSIT_STATE,*/
     REGISTRATION,
     SET_BILLING_PERIOD,
     SET_BILLING_PERIOD_START,

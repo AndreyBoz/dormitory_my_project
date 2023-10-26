@@ -1,13 +1,12 @@
 package ru.bozhov.dormitory.config;
 
-import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
 import ru.bozhov.dormitory.botAPI.DormitoryBot;
 import ru.bozhov.dormitory.botAPI.facade.TelegramFacade;
 
 @Configuration
+
 public class AppConfig {
     private final DormitoryBotConfig dormitoryBotConfig;
     public AppConfig(DormitoryBotConfig dormitoryBotConfig){
@@ -18,8 +17,9 @@ public class AppConfig {
         DormitoryBot dormitoryBot = new DormitoryBot(telegramFacade);
         dormitoryBot.setBotPath(dormitoryBotConfig.getWebhookPath());
         dormitoryBot.setBotName(dormitoryBotConfig.getBotName());
-        dormitoryBot.setBotToken(dormitoryBotConfig.getBotTocken());
+        dormitoryBot.setBotToken(dormitoryBotConfig.getBotToken());
 
         return dormitoryBot;
     }
+
 }

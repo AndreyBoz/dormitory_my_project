@@ -14,10 +14,8 @@ public class Deposit {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long depositId;
-    @Column(name= "deposit_amount")
-    private int amount;
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "usr")
     private User user;
     @Column(name = "date_ deposit")
     private java.sql.Date depositDate;

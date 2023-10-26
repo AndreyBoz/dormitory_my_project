@@ -34,7 +34,7 @@ public class UserServiceImpl implements UserService{
 
         }
         user.setBotState(botState);
-
+        log.info("New BotState - {}; Username - {}", botState, user.getUserName());
         userRepository.save(user);
     }
 
@@ -102,6 +102,21 @@ public class UserServiceImpl implements UserService{
             return user;
         }
         return null;
+    }
+
+    @Override
+    public User getUserByChatId(Long chatId) {
+        return userRepository.findById(chatId).orElse(null);
+    }
+
+    @Override
+    public void setBotStateByChatId(Long chatId, BotState botState) {
+        User user = userRepository.findById(chatId).orElse(null);
+
+        user.setBotState(botState);
+        log.info("New BotState - {}; Username - {}", botState, user.getUserName());
+
+        userRepository.save(user);
     }
 
     @Override
