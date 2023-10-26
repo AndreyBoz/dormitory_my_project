@@ -1,44 +1,35 @@
-package ru.bozhov.dormitory.messagehandlers.deposithandler;
+package ru.bozhov.dormitory.botAPI.facade;
 
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Message;
-import org.telegram.telegrambots.meta.api.objects.PhotoSize;
-import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
-import ru.bozhov.dormitory.botAPI.DormitoryBot;
 import ru.bozhov.dormitory.botAPI.state.BotState;
-import ru.bozhov.dormitory.messagehandlers.InputMessageHandler;
-import ru.bozhov.dormitory.service.UserService;
 
-import java.io.File;
+
+import ru.bozhov.dormitory.messagehandlers.InputMessageHandler;
+
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Component
-@Slf4j
-public class DepositMessageHandler implements InputMessageHandler {
-    @Autowired
-    private UserService userService;
+public class BotStateContext {
+    private final Map<BotState, InputMessageHandler> messageHandlers = new HashMap<>();
 
-    @Override
-    public BotState getHandlerName() {
-        return BotState.DEPOSIT;
+    public BotStateContext(List<InputMessageHandler> inputMessageHandlers) {
+        for (InputMessageHandler handler : inputMessageHandlers) {
+            messageHandlers.put(handler.getHandlerName(), handler);
+        }
     }
 
-    @Override
-    public SendMessage handle(Message message) {
-        SendMessage sendMessage = new SendMessage();
-        sendMessage.setChatId(message.getChatId());
+    public SendMessage getReplyMessage(BotState botState, Message message) {
+        InputMessageHandler currentMessageHandler = messageHandlers.get(botState);
 
-        if(userService.isRoomInitialized(message) && userService.isBillingPeriodInitialized(message)){
-            sendMessage.setText("Отправьте скриншот оплаты.");
-            userService.setBotState(message,BotState.DEPOSIT_PHOTO);
-        }else {
-            sendMessage.setText("Номер вашей комнаты или тарифный период не установлен.");
-            userService.setBotState(message,BotState.HELP);
+        if (currentMessageHandler == null) {
+            throw new IllegalStateException("No message handler found for state: " + botState);
         }
 
-        return sendMessage;
+        return currentMessageHandler.handle(message);
     }
 }
